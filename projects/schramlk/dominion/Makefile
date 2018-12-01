@@ -29,11 +29,46 @@ runtests: testDrawCard
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
+randomtestcard1.out: randomtestcard1.c dominion.o rngs.o
+	echo "randomtestcard1.c:" >> randomtestcard1.out
+	gcc -o randomtestcard1 randomtestcard1.c dominion.o rngs.o $(CFLAGS)
+	./randomtestcard1 >> randomtestcard1runresults.out
+	gcov -b -f dominion.c >> randomtestcard1.out
+	
+randomtestcard2.out: randomtestcard2.c dominion.o rngs.o
+	echo "randomtestcard2.c:" >> randomtestcard2.out
+	gcc -o randomtestcard2 randomtestcard2.c dominion.o rngs.o $(CFLAGS)
+	./randomtestcard2 >> randomtestcard2runresults.out
+	gcov -b -f dominion.c >> randomtestcard2.out
+	
+randomtestadventurer.out: randomtestadventurer.c dominion.o rngs.o
+	echo "randomtestadventurer.c:" >> randomtestadventurer.out
+	gcc -o randomtestadventurer randomtestadventurer.c dominion.o rngs.o $(CFLAGS)
+	./randomtestadventurer >> randomtestadventurerrunresults.out
+	gcov -b -f dominion.c >> randomtestadventurer.out
+	
+unittestcard1.out: unittestcard1.c dominion.o rngs.o
+	echo "unittestcard1.c:" >> unittestcard1.out
+	gcc -o unittestcard1 unittestcard1.c dominion.o rngs.o $(CFLAGS)
+	./unittestcard1 >> unittestcard1.out
+	gcov -b -f dominion.c >> unittestcard1.out
+	
+randomtestsmithy.out: randomtestsmithy.c dominion.o rngs.o
+	echo "randomtestsmithy.c:" >> randomtestsmithy.out
+	gcc -o randomtestsmithy randomtestsmithy.c dominion.o rngs.o $(CFLAGS)
+	./randomtestsmithy >> randomtestsmithy.out
+	gcov -b -f dominion.c >> randomtestsmithy.out
 
+randomtestvillage.out: randomtestvillage.c dominion.o rngs.o
+	echo "randomtestvillage.c:" >> randomtestvillage.out
+	gcc -o randomtestvillage randomtestvillage.c dominion.o rngs.o $(CFLAGS)
+	./randomtestvillage >> randomtestvillage.out
+	gcov -b -f dominion.c >> randomtestvillage.out	
+	
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
-all: playdom player 
+all: playdom player randomtestcard1.out randomtestcard2.out randomtestadventurer.out unittestcard1.out randomtestsmithy.out randomtestvillage.out
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
+	rm -f *.o playdom.exe playdom player player.exe randomtestcard1 randomtestcard1.out randomtestcard2 randomtestcard2.out unittestcard1 unittestcard1.out randomtestadventurer randomtestadventurer.out *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe randomtestsmithy randomtestvillage
